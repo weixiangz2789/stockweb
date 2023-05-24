@@ -32,12 +32,12 @@ export default function TradingViewWidget() {
         "TradingView" in window
       ) {
         new window.TradingView.widget({
-          autosize: true,
+          autosize: false,
           symbol: "NASDAQ:AAPL",
           interval: "D",
           timezone: "Etc/UTC",
-          theme: "light",
-          style: "1",
+          theme: "dar",
+          style: "2",
           locale: "en",
           toolbar_bg: "#f1f3f6",
           enable_publishing: false,
