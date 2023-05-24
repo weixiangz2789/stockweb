@@ -17,44 +17,48 @@ const Home: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-      <Layout title="Home">
-        <Flex
-          flexDir="column"
-          align="center"
-          justify="center"
-          px={{ base: 2, md: 16 }}
-        >
-          <Container maxW={"3xl"}>
-            <Stack
-              as={Box}
-              align="center"
-              justify="center"
-              textAlign="center"
-              spacing={{ base: 7, md: 10 }}
-              py={{ base: 8, md: 28 }}
+    <Layout title="Home">
+      <Flex
+        flexDir="column"
+        align="center"
+        justify="center"
+        px={{ base: 2, md: 16 }}
+      >
+        <Container maxW={"3xl"}>
+          <Stack
+            as={Box}
+            align="center"
+            justify="center"
+            textAlign="center"
+            spacing={{ base: 7, md: 10 }}
+            py={{ base: 8, md: 28 }}
+          >
+            <Heading
+              fontWeight="bold"
+              fontSize={{ base: "5xl", md: "5xl" }}
+              lineHeight={"110%"}
             >
-              <Heading
-                fontWeight="bold"
-                fontSize={{ base: "5xl", md: "5xl" }}
-                lineHeight={"110%"}
-              >
-                Organize Your Stocks With
-                <br />
-                <Text as={"span"} color={"red.300"}>
-                  Investico
-                </Text>
-              </Heading>
-              <Text color={"black.500"} fontSize="2xl">
-                [Temp]
+              Organize Your Stocks With
+              <br />
+              <Text as={"span"} color={"blue.300"}>
+                StonkGuru
               </Text>
-              <br></br>
-              <br></br>
-                <TradingViewWidget></TradingViewWidget>
-                <TradingViewWidget></TradingViewWidget>
-            </Stack>
-          </Container>
-        </Flex>
-      </Layout>
+            </Heading>
+            <Text color={"black.500"} fontSize="2xl">
+              A modern investment platform that provides users with a simple and
+              intuitive way to invest their money in a variety of financial
+              instruments. With the help of StonkGuru, investors can create a
+              personalized investment strategy that aligns with their financial
+              goals and risk tolerance.
+            </Text>
+            <br></br>
+            <br></br>
+            <TradingViewWidget></TradingViewWidget>
+            <TradingViewWidget></TradingViewWidget>
+          </Stack>
+        </Container>
+      </Flex>
+    </Layout>
   );
 };
 

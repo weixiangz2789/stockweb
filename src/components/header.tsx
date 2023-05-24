@@ -60,14 +60,15 @@ const Header: FC = () => {
         />
         <Link href="/">
           <Image
-            src="/logo-no-background.png"
+            src="\Meme_Man_on_transparent_background-removebg-preview.png"
             alt="Logo"
-            w={{ base: 20, md: 24 }}
+            w={{ base: 20, md: 20 }}
           />
         </Link>
-
-        <Input placeholder="Search" w={1000} />
-        <IconButton aria-label="Search" icon={<SearchIcon />} />
+        <Box>
+          <Input placeholder="Search" h={50} w={1000} m={5} />
+          <IconButton aria-label="Search" icon={<SearchIcon />} h={50} />
+        </Box>
 
         <Flex as="nav" display={{ base: "none", md: "flex" }}>
           {links.map((link, _) => (
