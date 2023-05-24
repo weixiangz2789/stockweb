@@ -51,11 +51,23 @@ const Home: NextPage = () => {
               personalized investment strategy that aligns with their financial
               goals and risk tolerance.
             </Text>
-            <br></br>
-            <br></br>
-            <TradingViewWidget></TradingViewWidget>
-            <TradingViewWidget></TradingViewWidget>
           </Stack>
+          <Stack
+            align="left"
+            textAlign="left"
+            spacing={{ base: 7, md: 10 }}
+            py={{ base: 8, md: 28 }}
+          >
+            <Heading
+              fontWeight="bold"
+              fontSize={{ base: "5xl", md: "5xl" }}
+              lineHeight={"110%"}
+            >
+              Trending Articles
+              <br />
+            </Heading>
+          </Stack>
+          <TradingViewWidget></TradingViewWidget>
         </Container>
       </Flex>
     </Layout>

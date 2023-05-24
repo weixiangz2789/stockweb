@@ -69,7 +69,6 @@ const Header: FC = () => {
           <Input placeholder="Search" h={50} w={1000} m={5} />
           <IconButton aria-label="Search" icon={<SearchIcon />} h={50} />
         </Box>
-
         <Flex as="nav" display={{ base: "none", md: "flex" }}>
           {links.map((link, _) => (
             <PageLink key={_} {...link} />
@@ -77,6 +76,7 @@ const Header: FC = () => {
         </Flex>
         <Flex px={4} />
       </Flex>
+
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
