@@ -1,9 +1,13 @@
 import React, { useEffect, useRef } from "react";
-let tvScriptLoadingPromise: Promise<Event>;
+
+let tvScriptLoadingPromise;
+
 export default function TradingViewWidget() {
-  const onLoadScriptRef = useRef<(() => void) | null>(null);
+  const onLoadScriptRef = useRef();
+
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
+
     if (!tvScriptLoadingPromise) {
       tvScriptLoadingPromise = new Promise((resolve) => {
         const script = document.createElement("script");
@@ -20,31 +24,30 @@ export default function TradingViewWidget() {
       () => onLoadScriptRef.current && onLoadScriptRef.current()
     );
 
-    return () => {
-      onLoadScriptRef.current = null;
-    };
-  }, []);
-  function createWidget() {
-    const stock = "AAPL"; // replace with your desired stock symbol
-    if (
-      document.getElementById("tradingview_e8628") &&
-      "TradingView" in window
-    ) {
-      new window.TradingView.widget({
-        autosize: false,
-        symbol: "NASDAQ:" + stock,
-        interval: "D",
-        timezone: "Etc/UTC",
-        theme: "dark",
-        style: "2",
-        locale: "en",
-        toolbar_bg: "#f1f3f6",
-        enable_publishing: false,
-        allow_symbol_change: true,
-        container_id: "tradingview_e8628",
-      });
+    return () => (onLoadScriptRef.current = null);
+
+    function createWidget() {
+      if (
+        document.getElementById("tradingview_e8628") &&
+        "TradingView" in window
+      ) {
+        new window.TradingView.widget({
+          autosize: false,
+          symbol: "NASDAQ:AAPL",
+          interval: "D",
+          timezone: "Etc/UTC",
+          theme: "dark",
+          style: "2",
+          locale: "en",
+          toolbar_bg: "#f1f3f6",
+          enable_publishing: false,
+          allow_symbol_change: true,
+          container_id: "tradingview_e8628",
+        });
+      }
     }
-  }
+  }, []);
+
   return (
     <div className="tradingview-widget-container">
       <div id="tradingview_e8628" />

@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/TradingViewWidget.tsx"
+    "src/components/TradingViewWidget.jsx"
   ],
   "exclude": ["node_modules"]
 }
