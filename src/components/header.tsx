@@ -66,8 +66,12 @@ const Header: FC = () => {
           />
         </Link>
         <Box>
-          <Input placeholder="Search" h={50} w={1000} m={5} />
-          <IconButton aria-label="Search" icon={<SearchIcon />} h={50} />
+          <Input placeholder="Enter a Ticker Symbol" h={50} w={1000} m={5} />
+          <IconButton
+            aria-label="Enter a Ticker Symbol"
+            icon={<SearchIcon />}
+            h={50}
+          />
         </Box>
         <Flex as="nav" display={{ base: "none", md: "flex" }}>
           {links.map((link, _) => (

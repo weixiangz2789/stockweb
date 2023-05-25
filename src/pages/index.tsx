@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+
 import {
   Text,
   Flex,
@@ -53,8 +54,8 @@ const Home: NextPage = () => {
             </Text>
           </Stack>
           <Stack
-            align="left"
-            textAlign="left"
+            align="center"
+            textAlign="center"
             spacing={{ base: 7, md: 10 }}
             py={{ base: 8, md: 28 }}
           >
@@ -64,10 +65,23 @@ const Home: NextPage = () => {
               lineHeight={"110%"}
             >
               Trending Articles
-              <br />
             </Heading>
           </Stack>
-          <TradingViewWidget></TradingViewWidget>
+          <Image src="/IZOO.JPG" alt="News1" w={{ base: 100, md: 50 }} />
+          <Stack
+            align="center"
+            textAlign="center"
+            spacing={{ base: 7, md: 10 }}
+            py={{ base: 8, md: 28 }}
+          >
+            <Heading
+              fontWeight="bold"
+              fontSize={{ base: "5xl", md: "5xl" }}
+              lineHeight={"110%"}
+            >
+              Trending Stocks
+            </Heading>
+          </Stack>
         </Container>
       </Flex>
     </Layout>
