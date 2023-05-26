@@ -1,16 +1,6 @@
 import type { NextPage } from "next";
 
-import {
-  Text,
-  Flex,
-  Heading,
-  Box,
-  Container,
-  Button,
-  Stack,
-  useDisclosure,
-  Image,
-} from "@chakra-ui/react";
+import { Text, Flex, Heading, Container, Stack } from "@chakra-ui/react";
 import Layout from "@/components/layout";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import { useEffect, useState } from "react";
@@ -55,9 +45,7 @@ const Home: NextPage = () => {
               fontWeight="bold"
               fontSize={{ base: "5xl", md: "5xl" }}
               lineHeight={"110%"}
-            >
-              Trending Stocks
-            </Heading>
+            ></Heading>
             <TradingViewWidget symbol={sym} />
           </Stack>
         </Container>
