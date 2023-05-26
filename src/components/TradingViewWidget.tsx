@@ -1,9 +1,15 @@
 import React, { useEffect, useRef } from "react";
 
-let tvScriptLoadingPromise;
+declare global {
+  interface Window {
+    TradingView: any; // Replace 'any' with the expected type of window.TradingView
+  }
+}
 
-export default function TradingViewWidget() {
-  const onLoadScriptRef = useRef();
+let tvScriptLoadingPromise: Promise<Event>;
+
+const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
+  const onLoadScriptRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
@@ -24,16 +30,18 @@ export default function TradingViewWidget() {
       () => onLoadScriptRef.current && onLoadScriptRef.current()
     );
 
-    return () => (onLoadScriptRef.current = null);
+    return () => {
+      onLoadScriptRef.current = null;
+    };
 
-    function createWidget() {
+    function createWidget(): void {
       if (
         document.getElementById("tradingview_e8628") &&
         "TradingView" in window
       ) {
         new window.TradingView.widget({
           autosize: false,
-          symbol: "NASDAQ:AAPL",
+          symbol: `NASDAQ:${symbol}`,
           interval: "D",
           timezone: "Etc/UTC",
           theme: "dark",
@@ -51,7 +59,7 @@ export default function TradingViewWidget() {
   return (
     <div className="tradingview-widget-container">
       <div id="tradingview_e8628" />
-      <div className="tradingview-widget-copyright"></div>
     </div>
   );
-}
+};
+export default TradingViewWidget;

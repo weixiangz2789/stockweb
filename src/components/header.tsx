@@ -41,6 +41,7 @@ const PageLink: FC<PropsWithChildren<{ label: string; path: string }>> = ({
 
 const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { push } = useRouter();
 
   return (
     <Box bg="gray.100" px={4}>
@@ -66,12 +67,19 @@ const Header: FC = () => {
           />
         </Link>
         <Box>
-          <Input placeholder="Enter a Ticker Symbol" h={50} w={1000} m={5} />
-          <IconButton
-            aria-label="Enter a Ticker Symbol"
-            icon={<SearchIcon />}
-            h={50}
-          />
+          <form
+            onSubmit={(e: any) => {
+              push(`/stock/${e.target[0].value}`);
+            }}
+          >
+            <Input placeholder="Enter a Ticker Symbol" h={50} w={1000} m={5} />
+            <IconButton
+              aria-label="Enter a Ticker Symbol"
+              icon={<SearchIcon />}
+              h={50}
+              type="submit"
+            />
+          </form>
         </Box>
         <Flex as="nav" display={{ base: "none", md: "flex" }}>
           {links.map((link, _) => (

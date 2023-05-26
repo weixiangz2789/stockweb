@@ -67,7 +67,7 @@ const Home: NextPage = () => {
               Trending Articles
             </Heading>
           </Stack>
-          <Image src="\public\IZOO.JPG" alt="Logo" w={{ base: 200, md: 100 }} />
+          <Image src="Izoo.JPG" alt="Logo" w={{ base: 200, md: 100 }} />
           <Stack
             align="center"
             textAlign="center"
@@ -81,7 +81,7 @@ const Home: NextPage = () => {
             >
               Trending Stocks
             </Heading>
-            <TradingViewWidget></TradingViewWidget>
+            <TradingViewWidget symbol="AMZN" />
           </Stack>
         </Container>
       </Flex>
