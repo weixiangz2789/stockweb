@@ -1,64 +1,57 @@
-import type { NextPage } from "next";
-import Layout from "@/components/layout";
-import { useEffect, useState } from "react";
-import {
-  Text,
-  Flex,
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  Input,
-  Heading,
-  Stack,
-  Divider,
-} from "@chakra-ui/react";
-import Link from "next/link";
+import React, { useState } from "react";
 
-const GroceryList: NextPage = () => {
-  const [groceries, setGroceries] = useState<string[]>(new Array());
+const StockWatchlist = () => {
+  const [stocks, setStocks] = useState<string[]>([]);
 
-  useEffect(() => {
-    const g = localStorage.getItem("groceries");
-    if (g) {
-      const items = JSON.parse(g);
-      if (items) {
-        setGroceries(items);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("groceries", JSON.stringify(groceries));
-  }, [groceries]);
-
-  const handleAddItem = (): void => {
-    const newItem = (
-      document.getElementById("newItemInput") as HTMLInputElement
-    ).value;
-    if (newItem) {
-      setGroceries((prevItems: any) => [...prevItems, newItem]);
-      (document.getElementById("newItemInput") as HTMLInputElement).value = "";
-    }
+  // Function to add a stock to the watchlist
+  const addStock = (symbol: string): void => {
+    setStocks((prevStocks: string[]) => [...prevStocks, symbol]);
   };
 
-  const handleAddRecipe = (arr: any): void => {
-    setGroceries((prevItems: any) => [...prevItems, ...arr]);
-  };
-
-  const handleClearList = () => {
-    setGroceries([]);
+  // Function to remove a stock from the watchlist
+  const removeStock = (symbol: string): void => {
+    setStocks((prevStocks: string[]) =>
+      prevStocks.filter((stock: string) => stock !== symbol)
+    );
   };
 
   return (
-    <Layout title="Grocery List">
-      <Flex
-        flexDir="column"
-        align="center"
-        justify="center"
-        px={{ base: 6, sm: 10 }}
-      ></Flex>
-    </Layout>
+    <div>
+      <h1>Stock Watchlist</h1>
+      <ul>
+        {stocks.length > 0 ? (
+          stocks.map((stock: string, index: number) => (
+            <li key={index}>
+              {stock} <button onClick={() => removeStock(stock)}>Remove</button>
+            </li>
+          ))
+        ) : (
+          <li>No stocks in watchlist. Add something!</li>
+        )}
+      </ul>
+      <div>
+        <input
+          type="text"
+          id="newStockInput"
+          placeholder="Enter stock symbol"
+        />
+        <button
+          onClick={() => {
+            const inputElement = document.getElementById(
+              "newStockInput"
+            ) as HTMLInputElement;
+            const symbol: string = inputElement.value;
+            if (symbol) {
+              addStock(symbol);
+              inputElement.value = "";
+            }
+          }}
+        >
+          Add Stock
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default GroceryList;
+export default StockWatchlist;
