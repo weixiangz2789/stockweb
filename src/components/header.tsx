@@ -83,6 +83,7 @@ const Header: FC = () => {
             href={`/stock/${stock}`}
             mr={40}
             as={Link}
+            // onClick={location.reload}
           />
         </Box>
         <Flex as="nav" display={{ base: "none", md: "flex" }}>

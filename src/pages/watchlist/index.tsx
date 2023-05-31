@@ -68,7 +68,7 @@ const WatchList: NextPage = () => {
         <Flex flexDir="column" minW={{ base: "xs", md: "lg" }} gap={5}>
           <Input id="newItemInput" placeholder="Type item here" />
           <Flex flexDir="row" align="center" justify="center" gap={10}>
-            <Button onClick={handleAddItem}>Add Item</Button>
+            <Button onClick={handleAddItem}>Add Stock</Button>
           </Flex>
           <CheckboxGroup>
             {watchlist.length > 0 ? (

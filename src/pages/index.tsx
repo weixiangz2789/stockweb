@@ -7,25 +7,11 @@ import {
   Box,
   Container,
   Stack,
-  useDisclosure,
   Image,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
 } from "@chakra-ui/react";
 import Layout from "@/components/layout";
-import TradingViewWidget from "@/components/TradingViewWidget";
-import { truncate } from "fs";
 
 const Home: NextPage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <Layout title="Home">
       <Flex
@@ -80,26 +66,33 @@ const Home: NextPage = () => {
           src="\Apple-sues-god_thumb .jpg"
           alt="Logo"
           width={1000}
-          height={600}
-          p={10}
+          height={500}
+          p={5}
           px={20}
+          maxWidth={1000}
         />
         <Heading>
-          <Text fontSize={25} p={10} style={{ flex: 1, flexWrap: "wrap" }}>
+          <Text
+            fontSize={25}
+            p={5}
+            maxWidth={700}
+            style={{ flex: 0.5, flexWrap: "wrap" }}
+          >
             Apple Drops the Ultimate Lawsuit: Sues God for Unauthorized Creation
             of Apple Devices in Heaven!
-            <Text
-              fontSize={18}
-              py={10}
-              fontWeight={"normal"}
-              style={{ flex: 1, flexWrap: "wrap" }}
-            >
-              In an astonishing turn of events, Apple has filed a groundbreaking
-              lawsuit, accusing God of creating apple devices in heaven without
-              proper authorization. The legal battle unfold as the tech giant
-              seeks to protect its trademark and intellectual property rights
-              even in the divine realm.
-            </Text>
+          </Text>
+          <Text
+            fontSize={18}
+            p={5}
+            fontWeight={"normal"}
+            maxWidth={700}
+            style={{ flex: 0.5, flexWrap: "wrap" }}
+          >
+            In an astonishing turn of events, Apple has filed a groundbreaking
+            lawsuit, accusing God of creating apple devices in heaven without
+            proper authorization. The legal battle unfold as the tech giant
+            seeks to protect its trademark and intellectual property rights even
+            in the divine realm.
           </Text>
         </Heading>
       </Box>
@@ -108,20 +101,27 @@ const Home: NextPage = () => {
         <Image
           src="\1607805320.webp"
           alt="Logo"
-          width={1100}
+          width={1000}
           height={500}
-          p={10}
+          p={5}
           px={20}
           style={{ flex: 1, flexWrap: "wrap" }}
+          maxWidth={1000}
         />
         <Heading>
-          <Text fontSize={20} p={10} style={{ flex: 1, flexWrap: "wrap" }}>
+          <Text
+            fontSize={20}
+            p={5}
+            maxWidth={700}
+            style={{ flex: 1, flexWrap: "wrap" }}
+          >
             SpongeBob SquarePants Unleashes Krabby Patty Stock Craze: Wall
             Street Sizzles in Profits
           </Text>
           <Text
             fontSize={18}
-            py={10}
+            p={5}
+            maxWidth={700}
             fontWeight={"normal"}
             style={{ flex: 1, flexWrap: "wrap" }}
           >
@@ -137,22 +137,29 @@ const Home: NextPage = () => {
         <Image
           src="\b24f40c8-e212-4765-a5b1-00a0c835e181-1667420600593-pfarm-with-png-watermarked.webp"
           alt="Logo"
-          width={1100}
+          width={1000}
           height={500}
-          p={10}
+          p={5}
           px={20}
+          maxWidth={1000}
           style={{ flex: 1, flexWrap: "wrap" }}
         />
         <Heading>
-          <Text fontSize={20} p={10} style={{ flex: 1, flexWrap: "wrap" }}>
+          <Text
+            fontSize={20}
+            p={5}
+            maxWidth={700}
+            style={{ flex: 0.5, flexWrap: "wrap" }}
+          >
             Friendly Invasion of Mars Leads to Worldwide Space Research Stock
             Rise
           </Text>
           <Text
             fontSize={18}
-            py={10}
+            p={5}
             fontWeight={"normal"}
-            style={{ flex: 1, flexWrap: "wrap" }}
+            maxWidth={700}
+            style={{ flex: 0.5, flexWrap: "wrap" }}
           >
             In an astonishing turn of events, Apple has filed a groundbreaking
             lawsuit, accusing God of creating apple devices in heaven without
