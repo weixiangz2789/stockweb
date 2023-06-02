@@ -40,7 +40,7 @@ const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
         "TradingView" in window
       ) {
         new window.TradingView.widget({
-          autosize: false,
+          autosize: true,
           symbol: `NASDAQ:${symbol}`,
           interval: "D",
           timezone: "Etc/UTC",
@@ -59,7 +59,7 @@ const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
   return (
     <div
       className="tradingview-widget-container"
-      style={{ width: "110%", height: "600px" }}
+      style={{ width: "250%", height: "825px" }}
     >
       <div id="tradingview_e8628" style={{ width: "100%", height: "100%" }} />
     </div>

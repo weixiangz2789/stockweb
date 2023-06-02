@@ -28,18 +28,12 @@ const Home: NextPage = () => {
 
   return (
     <Layout title="Home">
-      <Flex
-        flexDir="column"
-        align="center"
-        justify="center"
-        px={{ base: 2, md: 16 }}
-      >
+      <Flex flexDir="column" align="center" justify="center">
         <Container maxW={"3xl"}>
           <Stack
             align="center"
             textAlign="center"
             spacing={{ base: 7, md: 10 }}
-            py={{ base: 8, md: 28 }}
           >
             <Heading
               fontWeight="bold"
