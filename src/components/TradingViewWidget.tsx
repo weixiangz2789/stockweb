@@ -49,7 +49,7 @@ const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
           locale: "en",
           toolbar_bg: "#f1f3f6",
           enable_publishing: false,
-          allow_symbol_change: true,
+          allow_symbol_change: false,
           container_id: "tradingview_e8628",
         });
       }
@@ -57,8 +57,11 @@ const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
   }, []);
 
   return (
-    <div className="tradingview-widget-container">
-      <div id="tradingview_e8628" />
+    <div
+      className="tradingview-widget-container"
+      style={{ width: "110%", height: "600px" }}
+    >
+      <div id="tradingview_e8628" style={{ width: "100%", height: "100%" }} />
     </div>
   );
 };

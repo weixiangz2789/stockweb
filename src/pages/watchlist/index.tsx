@@ -5,29 +5,28 @@ import {
   Text,
   Flex,
   Button,
-  Checkbox,
-  CheckboxGroup,
   Input,
-  Heading,
-  Stack,
-  Divider,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import Link from "next/link";
+
+interface WatchlistItem {
+  ticker: string;
+  price: number;
+  priceChange: number;
+  percentChange: number;
+}
 
 const WatchList: NextPage = () => {
-  const [watchlist, setWatchlist] = useState<string[]>(new Array());
+  const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
 
   useEffect(() => {
-    const g = localStorage.getItem("groceries");
+    const g = localStorage.getItem("watchlist");
     if (g) {
       const items = JSON.parse(g);
       if (items) {
@@ -37,7 +36,7 @@ const WatchList: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("groceries", JSON.stringify(watchlist));
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);
 
   const handleAddItem = (): void => {
@@ -45,13 +44,28 @@ const WatchList: NextPage = () => {
       document.getElementById("newItemInput") as HTMLInputElement
     ).value;
     if (newItem) {
-      setWatchlist((prevItems: any) => [...prevItems, newItem]);
+      setWatchlist((prevItems: WatchlistItem[]) => [
+        ...prevItems,
+        {
+          ticker: newItem,
+          price: 0,
+          priceChange: 0,
+          percentChange: 0,
+        },
+      ]);
       (document.getElementById("newItemInput") as HTMLInputElement).value = "";
     }
   };
 
-  const handleAddRecipe = (arr: any): void => {
-    setWatchlist((prevItems: any) => [...prevItems, ...arr]);
+  const handleDeleteItem = (index: number): void => {
+    setWatchlist((prevItems: WatchlistItem[]) =>
+      prevItems.filter((_, i) => i !== index)
+    );
+  };
+
+  const handleReset = (): void => {
+    setWatchlist([]);
+    localStorage.removeItem("watchlist");
   };
 
   return (
@@ -69,50 +83,36 @@ const WatchList: NextPage = () => {
           <Input id="newItemInput" placeholder="Type item here" />
           <Flex flexDir="row" align="center" justify="center" gap={10}>
             <Button onClick={handleAddItem}>Add Stock</Button>
+            <Button onClick={handleReset} colorScheme="red">
+              Reset Table
+            </Button>
           </Flex>
-          <CheckboxGroup>
-            {watchlist.length > 0 ? (
-              watchlist.map((watchlist, index) => (
-                <Checkbox key={index}>{watchlist}</Checkbox>
-              ))
-            ) : (
-              <Text textAlign="center">Add a stock to get started!</Text>
-            )}
-          </CheckboxGroup>
           <TableContainer>
-            <Table variant="simple">
+            <Table variant="simple" size={"500"}>
               <Thead>
                 <Tr>
                   <Th>Ticker</Th>
                   <Th>Price</Th>
                   <Th isNumeric>Price Change</Th>
                   <Th isNumeric>% Change</Th>
+                  <Th></Th>
                 </Tr>
               </Thead>
               <Tbody>
-                <Tr>
-                  <Td>inches</Td>
-                  <Td>millimetres (mm)</Td>
-                  <Td isNumeric>25.4</Td>
-                </Tr>
-                <Tr>
-                  <Td>feet</Td>
-                  <Td>centimetres (cm)</Td>
-                  <Td isNumeric>30.48</Td>
-                </Tr>
-                <Tr>
-                  <Td>yards</Td>
-                  <Td>metres (m)</Td>
-                  <Td isNumeric>0.91444</Td>
-                </Tr>
+                {watchlist.map((item, index) => (
+                  <Tr key={index}>
+                    <Td>{item.ticker}</Td>
+                    <Td>{item.price}</Td>
+                    <Td isNumeric>{item.priceChange}</Td>
+                    <Td isNumeric>{item.percentChange}</Td>
+                    <Td>
+                      <Button onClick={() => handleDeleteItem(index)} m={3}>
+                        Delete
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))}
               </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Th>To convert</Th>
-                  <Th>into</Th>
-                  <Th isNumeric>multiply by</Th>
-                </Tr>
-              </Tfoot>
             </Table>
           </TableContainer>
         </Flex>

@@ -8,7 +8,6 @@ import {
   Flex,
   Button,
   Input,
-  ButtonGroup,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -77,13 +76,13 @@ const Header: FC = () => {
             }}
           />
           <IconButton
+            onClick={() => (window.location.href = `/stock/${stock}`)}
             aria-label="Enter a Ticker Symbol"
             icon={<SearchIcon />}
             h={50}
             href={`/stock/${stock}`}
             mr={40}
             as={Link}
-            // onClick={location.reload}
           />
         </Box>
         <Flex as="nav" display={{ base: "none", md: "flex" }}>
