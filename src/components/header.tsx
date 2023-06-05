@@ -81,7 +81,6 @@ const Header: FC = () => {
             icon={<SearchIcon />}
             h={50}
             href={`/stock/${stock}`}
-            mr={40}
             as={Link}
           />
         </Box>
@@ -90,9 +89,8 @@ const Header: FC = () => {
             <PageLink key={_} {...link} />
           ))}
         </Flex>
-        <Flex px={4} />
+        <Flex px={2} />
       </Flex>
-
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
@@ -102,6 +100,13 @@ const Header: FC = () => {
           </Stack>
         </Box>
       ) : null}
+      <IconButton
+        aria-label="DarkMode?"
+        icon={<SearchIcon />}
+        href={`/stock/${stock}`}
+        h={50}
+        as={Link}
+      />
     </Box>
   );
 };
