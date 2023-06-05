@@ -1,17 +1,24 @@
 import { FC, PropsWithChildren, useState } from "react";
 import {
   Stack,
-  Box,
   IconButton,
   Image,
   useDisclosure,
   Flex,
   Button,
   Input,
+  Box,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+  MoonIcon,
+  SunIcon,
+} from "@chakra-ui/icons";
 
 const links = [{ label: "Watchlist", path: "/watchlist" }];
 
@@ -41,6 +48,7 @@ const PageLink: FC<PropsWithChildren<{ label: string; path: string }>> = ({
 const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [stock, setStock] = useState("");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box bg="gray.100" px={4}>
@@ -65,7 +73,7 @@ const Header: FC = () => {
             w={{ base: 20, md: 20 }}
           />
         </Link>
-        <Box>
+        <Flex alignItems="center">
           <Input
             placeholder="Enter a Ticker Symbol"
             h={50}
@@ -83,13 +91,16 @@ const Header: FC = () => {
             href={`/stock/${stock}`}
             as={Link}
           />
-        </Box>
-        <Flex as="nav" display={{ base: "none", md: "flex" }}>
-          {links.map((link, _) => (
-            <PageLink key={_} {...link} />
-          ))}
         </Flex>
-        <Flex px={2} />
+        <Flex alignItems="center">
+          <PageLink label="Watchlist" path="/watchlist" />
+          <IconButton
+            aria-label="Toggle Dark Mode"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            h={50}
+          />
+        </Flex>
       </Flex>
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
@@ -100,13 +111,6 @@ const Header: FC = () => {
           </Stack>
         </Box>
       ) : null}
-      <IconButton
-        aria-label="DarkMode?"
-        icon={<SearchIcon />}
-        href={`/stock/${stock}`}
-        h={50}
-        as={Link}
-      />
     </Box>
   );
 };
