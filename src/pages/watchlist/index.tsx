@@ -14,6 +14,8 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import axios from "axios";
+import Link from "next/link";
 
 interface WatchlistItem {
   ticker: string;
@@ -21,6 +23,33 @@ interface WatchlistItem {
   priceChange: number;
   percentChange: number;
 }
+
+const fetchStockData = async (ticker: string) => {
+  const apiKey = "d3e5b470e2mshe8d6675990d80afp1c1708jsneb756898a37e";
+  const url = `https://apidojo-yahoo-finance1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=${ticker}`;
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        "x-rapidapi-key": apiKey,
+        "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+      },
+    });
+    const data = response.data.quoteResponse.result[0];
+
+    if (data) {
+      const price = data.regularMarketPrice;
+      const priceChange = data.regularMarketChange;
+      const percentChange = data.regularMarketChangePercent;
+
+      return { price, priceChange, percentChange };
+    }
+  } catch (error) {
+    console.error("Error fetching stock data:", error);
+  }
+
+  return null;
+};
 
 const WatchList: NextPage = () => {
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
@@ -39,20 +68,50 @@ const WatchList: NextPage = () => {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);
 
-  const handleAddItem = (): void => {
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      const updatedWatchlist = await Promise.all(
+        watchlist.map(async (item) => {
+          const stockData = await fetchStockData(item.ticker);
+
+          if (stockData) {
+            return {
+              ticker: item.ticker,
+              price: stockData.price,
+              priceChange: stockData.priceChange,
+              percentChange: stockData.percentChange,
+            };
+          }
+
+          return item;
+        })
+      );
+
+      setWatchlist(updatedWatchlist);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [watchlist]);
+
+  const handleAddItem = async (): Promise<void> => {
     const newItem = (
       document.getElementById("newItemInput") as HTMLInputElement
     ).value;
     if (newItem) {
-      setWatchlist((prevItems: WatchlistItem[]) => [
-        ...prevItems,
-        {
-          ticker: newItem,
-          price: 0,
-          priceChange: 0,
-          percentChange: 0,
-        },
-      ]);
+      const stockData = await fetchStockData(newItem);
+
+      if (stockData) {
+        setWatchlist((prevItems: WatchlistItem[]) => [
+          ...prevItems,
+          {
+            ticker: newItem,
+            price: stockData.price,
+            priceChange: stockData.priceChange,
+            percentChange: stockData.percentChange,
+          },
+        ]);
+      }
+
       (document.getElementById("newItemInput") as HTMLInputElement).value = "";
     }
   };
@@ -80,7 +139,7 @@ const WatchList: NextPage = () => {
           WatchList
         </Text>
         <Flex flexDir="column" minW={{ base: "xs", md: "lg" }} gap={5}>
-          <Input id="newItemInput" placeholder="Type item here" />
+          <Input id="newItemInput" placeholder="Type ticker here" />
           <Flex flexDir="row" align="center" justify="center" gap={10}>
             <Button onClick={handleAddItem}>Add Stock</Button>
             <Button onClick={handleReset} colorScheme="red">
@@ -101,10 +160,16 @@ const WatchList: NextPage = () => {
               <Tbody>
                 {watchlist.map((item, index) => (
                   <Tr key={index}>
-                    <Td>{item.ticker}</Td>
-                    <Td>{item.price}</Td>
-                    <Td isNumeric>{item.priceChange}</Td>
-                    <Td isNumeric>{item.percentChange}</Td>
+                    <Td minW="100px">
+                      <Link href={`/stock/${item.ticker}`}>{item.ticker}</Link>
+                    </Td>
+                    <Td w="120px">${item.price.toFixed(2)}</Td>
+                    <Td w="120px" isNumeric>
+                      ${item.priceChange.toFixed(2)}
+                    </Td>
+                    <Td w="120px" isNumeric>
+                      {item.percentChange.toFixed(2)}%
+                    </Td>
                     <Td>
                       <Button onClick={() => handleDeleteItem(index)} m={3}>
                         Delete
