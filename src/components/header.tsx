@@ -50,8 +50,13 @@ const Header: FC = () => {
   const [stock, setStock] = useState("");
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      window.location.href = `/stock/${stock}`;
+    }
+  };
   return (
-    <Box bg="gray.100" px={4}>
+    <Box bg={colorMode === "light" ? "gray.100" : "gray.800"} px={4}>
       <Flex
         h={{ base: 28, md: 24 }}
         px={5}
@@ -68,7 +73,7 @@ const Header: FC = () => {
         />
         <Link href="/">
           <Image
-            src="\Meme_Man_on_transparent_background-removebg-preview.png"
+            src="\4d36ad11f14a453db575dceb0abc9265.png"
             alt="Logo"
             w={{ base: 20, md: 20 }}
           />
@@ -82,6 +87,7 @@ const Header: FC = () => {
             onChange={(e) => {
               setStock(e.target.value);
             }}
+            onKeyPress={handleKeyPress}
           />
           <IconButton
             onClick={() => (window.location.href = `/stock/${stock}`)}

@@ -25,7 +25,7 @@ interface WatchlistItem {
 }
 
 const fetchStockData = async (ticker: string) => {
-  const apiKey = "d3e5b470e2mshe8d6675990d80afp1c1708jsneb756898a37e";
+  const apiKey = "4414df37b1msh22e1acb4e134b46p1e28c5jsn3314dce3405a";
   const url = `https://apidojo-yahoo-finance1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=${ticker}`;
 
   try {

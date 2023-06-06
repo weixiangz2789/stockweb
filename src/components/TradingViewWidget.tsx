@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from "react";
+import { useColorMode } from "@chakra-ui/react";
 
 declare global {
   interface Window {
-    TradingView: any; // Replace 'any' with the expected type of window.TradingView
+    TradingView: any;
   }
 }
 
 let tvScriptLoadingPromise: Promise<Event>;
 
 const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
-  const onLoadScriptRef = useRef<(() => void) | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
-    onLoadScriptRef.current = createWidget;
-
     if (!tvScriptLoadingPromise) {
       tvScriptLoadingPromise = new Promise((resolve) => {
         const script = document.createElement("script");
@@ -26,43 +26,40 @@ const TradingViewWidget: React.FC<{ symbol: string }> = ({ symbol }) => {
       });
     }
 
-    tvScriptLoadingPromise.then(
-      () => onLoadScriptRef.current && onLoadScriptRef.current()
-    );
+    tvScriptLoadingPromise.then(createWidget);
 
     return () => {
-      onLoadScriptRef.current = null;
-    };
-
-    function createWidget(): void {
-      if (
-        document.getElementById("tradingview_e8628") &&
-        "TradingView" in window
-      ) {
-        new window.TradingView.widget({
-          autosize: true,
-          symbol: `NASDAQ:${symbol}`,
-          interval: "D",
-          timezone: "Etc/UTC",
-          theme: "dark",
-          style: "2",
-          locale: "en",
-          toolbar_bg: "#f1f3f6",
-          enable_publishing: false,
-          allow_symbol_change: false,
-          container_id: "tradingview_e8628",
-        });
+      if (containerRef.current) {
+        containerRef.current.innerHTML = "";
       }
+    };
+  }, [colorMode]);
+
+  function createWidget(): void {
+    if (containerRef.current && "TradingView" in window) {
+      new window.TradingView.widget({
+        autosize: true,
+        symbol: `NASDAQ:${symbol}`,
+        interval: "D",
+        timezone: "Etc/UTC",
+        theme: colorMode === "light" ? "light" : "dark",
+        style: "2",
+        locale: "en",
+        toolbar_bg: "#f1f3f6",
+        enable_publishing: false,
+        allow_symbol_change: false,
+        container_id: containerRef.current.id,
+      });
     }
-  }, []);
+  }
 
   return (
     <div
+      ref={containerRef}
+      id="tradingview_e8628"
       className="tradingview-widget-container"
       style={{ width: "250%", height: "825px" }}
-    >
-      <div id="tradingview_e8628" style={{ width: "100%", height: "100%" }} />
-    </div>
+    />
   );
 };
 export default TradingViewWidget;
